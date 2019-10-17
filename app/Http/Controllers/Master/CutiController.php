@@ -102,4 +102,12 @@ class CutiController extends Controller
 
         return redirect('/cuti')->with('success', 'Success reject submission cuti');
     }
+
+    public function approve($id) {
+        $cuti   = Cuti::where('id', $id)->update([
+            'status'    => 'accept'
+        ]);
+
+        return redirect('/cuti')->with('success', 'Success approve submission cuti');
+    }
 }

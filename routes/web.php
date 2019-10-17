@@ -44,6 +44,7 @@ Route::group(['middleware' => 'usersession'], function(){
         Route::match(['get', 'put'], '/edit/{id}', 'Master\CutiController@edit');
         Route::delete('/delete/{id}', 'Master\CutiController@delete');
         Route::get('/reject/{id}', 'Master\CutiController@reject');
+        Route::get('/approve/{id}', 'Master\CutiController@approve');
     });
 
     // submission
