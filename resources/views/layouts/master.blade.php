@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ $judul }} - Pusaka Arta</title>
+    <title>{{ $title }} - Sistem Informasi Cuti Karyawan</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href={{ URL::asset('dataTables/datatables.min.css') }}>
     <link rel="stylesheet" href={{ URL::asset("vendors/iconfonts/mdi/css/materialdesignicons.min.css") }}>
@@ -15,14 +15,16 @@
     <link rel="stylesheet" href={{ URL::asset("css/style.css") }}>
     <!-- endinject -->
     <link rel="shortcut icon" href={{ URL::asset("images/favicon.png") }} />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" />
 </head>
 <body>
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="{{ url('/') }}">Pusaka Arta</a>
-                <a class="navbar-brand brand-logo-mini" href="{{ url('/') }}">PA</a>
+                <a class="navbar-brand brand-logo" href="{{ url('/') }}">SICK</a>
+                <a class="navbar-brand brand-logo-mini" href="{{ url('/') }}">SICK</a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-stretch">
                 <ul class="navbar-nav navbar-nav-right">
@@ -62,40 +64,37 @@
                             </div>
                             <div class="nav-profile-text d-flex flex-column">
                                 <span class="font-weight-bold mb-2">{{ session('name') }}</span>
-                                <span class="text-secondary text-small">Administrator</span>
+                                <span class="text-secondary text-small">{{ session('role_name') }}</span>
                             </div>
                             <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="{{ url('/') }}">
                             <span class="menu-title">Home</span>
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
                     </li>
+
+                    @if (session('role') != 3)
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
+                                <span class="menu-title">Master</span>
+                                <i class="menu-arrow"></i>
+                                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                            </a>
+                            <div class="collapse" id="master">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="{{ url('/role') }}">Role</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="{{ url('/staff') }}">Staff</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
+                    
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
-                            <span class="menu-title">Master</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="master">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/supplier') }}">Supplier</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/kriteria') }}">Kriteria</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="{{ url('/periode') }}">Periode</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/icons/mdi.html">
-                            <span class="menu-title">Icons</span>
-                            <i class="mdi mdi-contacts menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/forms/basic_elements.html">
-                            <span class="menu-title">Forms</span>
+                        <a class="nav-link" href="{{ url('/cuti') }}">
+                            <span class="menu-title">Submission Cuti</span>
                             <i class="mdi mdi-format-list-bulleted menu-icon"></i>
                         </a>
                     </li>
@@ -134,6 +133,8 @@
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src={{ URL::asset("js/dashboard.js") }}></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
     <!-- End custom js for this page-->
     @yield('script')
 </body>

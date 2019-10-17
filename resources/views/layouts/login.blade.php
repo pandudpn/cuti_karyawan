@@ -33,7 +33,7 @@
               <h4>Hai! Login untuk memulai</h4>
               {!! Form::open(['class' => 'pt-3']) !!}
                 <div class="form-group">
-                  <input type="username" name="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                  <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="email@email.com">
                 </div>
                 <div class="form-group">
                   <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="******">

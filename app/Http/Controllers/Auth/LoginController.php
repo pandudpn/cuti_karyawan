@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
-use App\Models\Users;
+use App\Models\Staff;
 
 class LoginController extends Controller
 {
@@ -19,16 +19,21 @@ class LoginController extends Controller
     }
 
     public function doLogin(Request $request){
-        $username   = $request->input('username');
+        $email      = $request->input('email');
         $password   = sha1($request->input('password'));
 
-        $users      = Users::where('username', $username)->first();
-        // dd($users);
+        $users      = Staff::where('email', $email)
+                            ->join('role AS r', 'r.id', '=', 'staff.role_id')
+                            ->select('staff.*', 'r.name AS role_name')
+                            ->first();
+
         if($users){
             if(Hash::check($password, $users->password)){
                 $request->session()->put('id', $users->id);
                 $request->session()->put('name', $users->name);
-                $request->session()->put('username', $users->username);
+                $request->session()->put('role', $users->role_id);
+                $request->session()->put('role_name', $users->role_name);
+                $request->session()->put('email', $users->email);
                 $request->session()->put('login', TRUE);
                 return redirect('/');
             }else{
@@ -40,7 +45,6 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        // Session::flush();
         session()->flush();
         return redirect('/login');
     }
